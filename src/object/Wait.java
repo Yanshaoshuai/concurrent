@@ -1,5 +1,7 @@
 package object;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @Author YSS
  * @Date 2020/6/12 17:41
@@ -24,6 +26,12 @@ public class Wait {
                 System.out.println(Thread.currentThread().getName()+"获取到了锁");
                 //随机唤醒一个
                 object.notify();
+                //必须等到当前线程执行完释放了锁,wait线程才能获取到
+                // try {
+                //     TimeUnit.SECONDS.sleep(10);
+                // } catch (InterruptedException e) {
+                //     throw new RuntimeException(e);
+                // }
                 System.out.println(Thread.currentThread().getName()+"调用了notify");
             }
         };

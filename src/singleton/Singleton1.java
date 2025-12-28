@@ -10,7 +10,7 @@ public class Singleton1 {
     private Singleton1(){
 
     }
-    private static Singleton1 getInstance(){
+    public static Singleton1 getInstance(){
         return INSTANCE;
     }
 }

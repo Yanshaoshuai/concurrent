@@ -12,7 +12,7 @@ public class Singleton7 {
     private Singleton7(){
 
     }
-    private static Singleton7 getInstance(){
+    public static Singleton7 getInstance(){
         //第一次使用才加载
         return SingletonInstance.INSTANCE;
     }

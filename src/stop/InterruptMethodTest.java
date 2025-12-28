@@ -18,7 +18,7 @@ public class InterruptMethodTest {
         threadOne.interrupt();
         Thread.sleep(1000);
         System.out.println(threadOne.isInterrupted());
-        //相当于Thread.interrupted()
+        //相当于Thread.currentThread().interrupted()
         // 操作的是当前线程的中断状态而不是threadOne的
         System.out.println(Thread.interrupted());
         System.out.println(Thread.interrupted());

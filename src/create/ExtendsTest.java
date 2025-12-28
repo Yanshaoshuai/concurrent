@@ -6,7 +6,7 @@ import javafx.scene.Parent;
  * @Author YSS
  * @Date 2020/6/11 23:26
  */
-public class ExtendsTest {
+public class    ExtendsTest {
     public static class Parent {
         public void run() {
             System.out.println("Parent#run");

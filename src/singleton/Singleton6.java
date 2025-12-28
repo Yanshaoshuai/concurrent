@@ -10,7 +10,7 @@ public class Singleton6 {
     private Singleton6(){
 
     }
-    private static Singleton6 getInstance(){
+    public static Singleton6 getInstance(){
         if(instance==null){
             //在此竞争
             synchronized(Singleton6.class){

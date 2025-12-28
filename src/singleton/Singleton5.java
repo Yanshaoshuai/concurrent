@@ -10,7 +10,7 @@ public class Singleton5 {
     private Singleton5(){
 
     }
-    private static  Singleton5 getInstance(){
+    public static  Singleton5 getInstance(){
         if(instance==null){
             //进入判断就会创建实例
             synchronized(Singleton5.class){
