@@ -12,22 +12,35 @@ public class Fibonacci extends RecursiveTask<Integer> {
 
     @Override
     protected Integer compute() {
-        if(n<=1){
-            return n;
+        //防止子任务拆分过小
+        if (n <= 10) {
+            return fib(n);
         }
         Fibonacci fibonacci1 = new Fibonacci(n - 1);
-        //fork子线程去执行子任务
+        //fork 提交子任务
         fibonacci1.fork();
         Fibonacci fibonacci2 = new Fibonacci(n - 2);
-        //fork子线程去执行子任务
+        //fork 提交子任务
         fibonacci2.fork();
         //汇总子任务
-        return fibonacci2.join()+fibonacci1.join();
+        return fibonacci2.join() + fibonacci1.join();
+    }
+
+
+    public static int fib(int n) {
+        if (n <= 1) {
+            return n;
+        }
+        return fib(n - 2) + fib(n - 1);
     }
 
     public static void main(String[] args) {
-        Fibonacci fibonacci = new Fibonacci(10);
-        ForkJoinPool forkJoinPool=new ForkJoinPool();
-        System.out.println(forkJoinPool.invoke(fibonacci));
+        long startMills = System.currentTimeMillis();
+        Fibonacci fibonacci = new Fibonacci(45);
+        ForkJoinPool forkJoinPool = new ForkJoinPool(4);
+        System.out.println(forkJoinPool.invoke(fibonacci) + " time used:" + (System.currentTimeMillis() - startMills));
+        startMills = System.currentTimeMillis();
+        int fib = fib(45);
+        System.out.println(fib + " time used:" + (System.currentTimeMillis() - startMills));
     }
 }

@@ -5,74 +5,83 @@ import java.util.LinkedList;
 
 /**
  * 生产者消费者模式
+ *
  * @Author YSS
  * @Date 2020/6/12 18:28
  */
 public class ProducerConsumerModel {
     public static void main(String[] args) {
-        EventStorage storage=new EventStorage(10,new LinkedList<>());
-        Producer producer=new Producer(storage);
-        Consumer consumer=new Consumer(storage);
-        Thread producerThread=new Thread(producer);
-        Thread consumerThread=new Thread(consumer);
+        EventStorage storage = new EventStorage(10, new LinkedList<>());
+        Producer producer = new Producer(storage);
+        Consumer consumer = new Consumer(storage);
+        Thread producerThread = new Thread(producer);
+        Thread consumerThread = new Thread(consumer);
         producerThread.start();
         consumerThread.start();
     }
 }
-class Producer implements Runnable{
-    private EventStorage storage;
+
+class Producer implements Runnable {
+    private final EventStorage storage;
+
     public Producer(EventStorage storage) {
         this.storage = storage;
     }
+
     @Override
     public void run() {
-        for (int i=0;i<1000;i++){
+        for (int i = 0; i < 1000; i++) {
             storage.put(new Date());
         }
     }
 }
 
-class Consumer implements Runnable{
-    private EventStorage storage;
+class Consumer implements Runnable {
+    private final EventStorage storage;
+
     public Consumer(EventStorage storage) {
         this.storage = storage;
     }
+
     @Override
     public void run() {
-        for (int i=0;i<1000;i++){
+        for (int i = 0; i < 1000; i++) {
             storage.take();
         }
     }
 }
-class EventStorage{
-    private int maxSize;
-    private LinkedList<Date> storage;
+
+class EventStorage {
+    private final int maxSize;
+    private final LinkedList<Date> storage;
 
     public EventStorage(int maxSize, LinkedList<Date> storage) {
         this.maxSize = maxSize;
         this.storage = storage;
     }
-    public synchronized void put(Date date){
-        while (storage.size()==maxSize){
+
+    public synchronized void put(Date date) {
+        while (storage.size() == maxSize) {
             try {
                 wait();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         storage.add(date);
-        System.out.println("添加了一个元素"+date+"目前仓库里有"+storage.size()+"数据");
+        System.out.println("添加了一个元素" + date + "目前仓库里有" + storage.size() + "数据");
         notify();
     }
-    public synchronized void take(){
-        while (storage.size()==0){
+
+    public synchronized void take() {
+        while (storage.isEmpty()) {
             try {
                 wait();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
-        System.out.println("取出一个元素"+storage.poll()+"还剩"+storage.size()+"个元素");
+        System.out.println("取出一个元素" + storage.poll() + "还剩" + storage.size() + "个元素");
         notify();
     }
 }

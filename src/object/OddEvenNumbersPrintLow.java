@@ -6,7 +6,7 @@ package object;
  */
 public class OddEvenNumbersPrintLow {
     private static int count=0;
-    private static Object lock=new Object();
+    private static final Object lock=new Object();
     public static void main(String[] args) {
         Runnable oddTarget=()->{
             while (count<100){

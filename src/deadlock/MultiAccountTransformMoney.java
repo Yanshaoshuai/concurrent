@@ -8,14 +8,14 @@ import java.util.Random;
  * @Date 2020/6/14 22:13
  */
 public class MultiAccountTransformMoney {
-    private static int ACCOUNT_NUM=100;
-    private static int TRANSFORM_NUM=1000000;
-    private static int INITIAL_MONEY=1000000;
-    private static int THREAD_NUM=20;
+    private static final int ACCOUNT_NUM=100;
+    private static final int TRANSFORM_NUM=1000000;
+    private static final int INITIAL_MONEY=1000000;
+    private static final int THREAD_NUM=20;
     public static void main(String[] args) {
         TransformMoney.Account[] accounts=new TransformMoney.Account[ACCOUNT_NUM];
         for (int i=0;i<ACCOUNT_NUM;i++){
-            accounts[i]=new TransformMoney.Account(INITIAL_MONEY);
+            accounts[i]=new TransformMoney.Account("Account"+i, INITIAL_MONEY);
         }
         Random random=new Random();
         Runnable target=()->{

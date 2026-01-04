@@ -25,13 +25,13 @@ public class DiningPhilosophers {
         }
     }
     static class Philosopher implements Runnable{
-        private static Random random=new Random();
+        private static final Random random=new Random();
         public Philosopher(Object rightChopstick, Object leftChopstick) {
             this.rightChopstick = rightChopstick;
             this.leftChopstick = leftChopstick;
         }
-        private Object rightChopstick;
-        private Object leftChopstick;
+        private final Object rightChopstick;
+        private final Object leftChopstick;
         @Override
         public void run() {
             while (true){
@@ -43,7 +43,7 @@ public class DiningPhilosophers {
                         try {
                             TimeUnit.NANOSECONDS.sleep(random.nextInt(1000));
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            throw new RuntimeException("interrupted");
                         }
                         doAction("Put down right chopstick");
                     }

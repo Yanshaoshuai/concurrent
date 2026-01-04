@@ -6,8 +6,8 @@ package object;
  * @Date 2020/6/12 18:05
  */
 public class JustReleaseCurrentMonitor {
-    private static Object resourceA=new Object();
-    private static Object resourceB=new Object();
+    private static final Object resourceA=new Object();
+    private static final Object resourceB=new Object();
 
     public static void main(String[] args) throws InterruptedException {
         Runnable target1=()->{

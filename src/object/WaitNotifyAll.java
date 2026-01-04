@@ -5,24 +5,26 @@ package object;
  * @Date 2020/6/12 17:50
  */
 public class WaitNotifyAll {
-    private static Object object=new Object();
+
+    private static final Object object = new Object();
+
     public static void main(String[] args) throws InterruptedException {
-        Runnable targetWait=()->{
-            synchronized (object){
+        Runnable targetWait = () -> {
+            synchronized (object) {
                 try {
-                    System.out.println(Thread.currentThread().getName()+"释放锁");
+                    System.out.println(Thread.currentThread().getName() + "释放锁");
                     object.wait();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
-                System.out.println(Thread.currentThread().getName()+"又获得锁");
+                System.out.println(Thread.currentThread().getName() + "又获得锁");
             }
         };
-        Thread thread1=new Thread(targetWait);
-        Thread thread2=new Thread(targetWait);
-        Thread thread3=new Thread(()->{
-            synchronized (object){
-                System.out.println(Thread.currentThread().getName()+"唤醒所有");
+        Thread thread1 = new Thread(targetWait);
+        Thread thread2 = new Thread(targetWait);
+        Thread thread3 = new Thread(() -> {
+            synchronized (object) {
+                System.out.println(Thread.currentThread().getName() + "唤醒所有");
                 object.notifyAll();
             }
         });
